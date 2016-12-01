@@ -37,7 +37,7 @@ public class ContactCreationTest {
   @Test
   public void testContactCreation() {
     gotoContactCreationForm();
-        fillContactForm(getParamsObject());
+    fillContactForm(getParamsObject());
     submitContactCreation();
   }
 
