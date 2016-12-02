@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
+import ru.stqa.pft.addressbook.tests.ContactHelper;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +15,7 @@ public class ApplicationManager {
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
+  private ContactHelper contactHelper;
 
 
   public void init() {
@@ -23,6 +25,7 @@ public class ApplicationManager {
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);
     sessionHelper = new SessionHelper(wd);
+    contactHelper = new ContactHelper(wd);
     sessionHelper.login("admin", "secret");
   }
 
@@ -34,8 +37,12 @@ public class ApplicationManager {
   public GroupHelper getGroupHelper() {
     return groupHelper;
   }
+  public ContactHelper contactHelper() {
+    return contactHelper;
+  }
 
   public NavigationHelper getNavigationHelper() {
     return navigationHelper;
   }
+
 }
