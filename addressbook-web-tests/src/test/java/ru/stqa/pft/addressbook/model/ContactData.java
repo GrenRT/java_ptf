@@ -3,7 +3,7 @@ package ru.stqa.pft.addressbook.model;
 /**
  * Created by razgonyaev on 01.12.2016.
  */
-public class ParamsObject {
+public class ContactData {
 
   private String firstName;
   private String middleName;
