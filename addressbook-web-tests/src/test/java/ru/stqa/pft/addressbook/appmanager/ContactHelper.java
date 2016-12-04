@@ -57,4 +57,16 @@ public class ContactHelper extends HelperBase {
     contactData.setEmail2("test2@test.test");
     return contactData;
   }
+
+  public void openModificationForm() {
+    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  }
+
+  public void submitContactModification() {
+    click(By.name("update"));
+  }
+
+  public void deleteContact() {
+    click(By.xpath("//div[@id='content']/form[2]/input[2]"));
+  }
 }
