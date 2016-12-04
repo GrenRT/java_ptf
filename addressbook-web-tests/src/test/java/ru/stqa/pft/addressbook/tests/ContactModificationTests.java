@@ -12,7 +12,7 @@ public class ContactModificationTests extends TestBase {
   public void testContactModification() {
     app.contactHelper().gotoHome();
     app.contactHelper().openModificationForm();
-    app.contactHelper().fillContactForm(ContactHelper.getParamsObject());
+    app.contactHelper().fillContactForm(ContactHelper.getParamsObject(), false);
     app.contactHelper().submitContactModification();
   }
 }
