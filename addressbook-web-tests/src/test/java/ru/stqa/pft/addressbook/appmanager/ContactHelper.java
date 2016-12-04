@@ -1,4 +1,4 @@
-package ru.stqa.pft.addressbook.tests;
+package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -20,11 +20,11 @@ public class ContactHelper extends HelperBase {
     super(wd);
   }
 
-  protected void submitContactCreation() {
+  public void submitContactCreation() {
     click(By.name("submit"));
   }
 
-  protected void fillContactForm(ContactData contactData) {
+  public void fillContactForm(ContactData contactData) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("middlename"), contactData.getMiddleName());
     type(By.name("lastname"), contactData.getLastName());
@@ -38,11 +38,11 @@ public class ContactHelper extends HelperBase {
     type(By.name("email2"), contactData.getEmail2());
   }
 
-  protected void gotoContactCreationForm() {
+  public void gotoContactCreationForm() {
     click(By.linkText("add new"));
   }
 
-  protected static ContactData getParamsObject() {
+  public static ContactData getParamsObject() {
     ContactData contactData = new ContactData();
     contactData.setNickName("Test" + add);
     contactData.setFirstName("Test" + add);

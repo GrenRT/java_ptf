@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.stqa.pft.addressbook.tests.ContactHelper;
 
 import java.util.concurrent.TimeUnit;
 
