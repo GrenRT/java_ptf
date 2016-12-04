@@ -80,7 +80,4 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("//div[@id='content']/form[2]/input[2]"));
   }
 
-  public void gotoHome() {
-    click(By.linkText("home"));
-  }
 }
