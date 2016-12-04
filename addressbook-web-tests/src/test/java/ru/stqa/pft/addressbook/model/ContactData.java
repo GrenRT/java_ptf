@@ -16,6 +16,7 @@ public class ContactData {
   private String mobilePhone;
   private String email1;
   private String email2;
+  private String group;
 
   public String getEmail2() {
     return email2;
@@ -110,5 +111,13 @@ public class ContactData {
 
   public void setMiddleName(String middleName) {
     this.middleName = middleName;
+  }
+
+  public String getGroup() {
+    return group;
+  }
+
+  public void setGroup(String group) {
+    this.group = group;
   }
 }
