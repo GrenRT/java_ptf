@@ -16,8 +16,7 @@ import java.util.Random;
  */
 public class ContactHelper extends HelperBase {
 
-  static Random r = new Random();
-  static int add = r.nextInt(10);
+
 
   public ContactHelper(WebDriver wd) {
     super(wd);
@@ -51,22 +50,7 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public static ContactData getParamsObject() {
-    ContactData contactData = new ContactData();
-    contactData.setNickName("Test" + add);
-    contactData.setFirstName("Test" + add);
-    contactData.setMiddleName("Test" + add);
-    contactData.setLastName("Test" + add);
-    contactData.setTitle("title");
-    contactData.setCompanyName("company");
-    contactData.setAddress("address");
-    contactData.setHomePhone("" + (r.nextInt(100000) + 1000000));
-    contactData.setMobilePhone("+7987" + r.nextInt(1000000));
-    contactData.setEmail1("test@test.test");
-    contactData.setEmail2("test2@test.test");
-    contactData.setGroup("test2");
-    return contactData;
-  }
+
 
   public void openModificationForm() {
     click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));

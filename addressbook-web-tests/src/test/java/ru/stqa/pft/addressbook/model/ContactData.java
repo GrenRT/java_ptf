@@ -1,9 +1,14 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.util.Random;
+
 /**
  * Created by razgonyaev on 01.12.2016.
  */
 public class ContactData {
+
+  static Random r = new Random();
+  static int add = r.nextInt(10);
 
   private String firstName;
   private String middleName;
@@ -17,6 +22,23 @@ public class ContactData {
   private String email1;
   private String email2;
   private String group;
+
+  public static ContactData getParamsObject() {
+    ContactData contactData = new ContactData();
+    contactData.setNickName("Test" + add);
+    contactData.setFirstName("Test" + add);
+    contactData.setMiddleName("Test" + add);
+    contactData.setLastName("Test" + add);
+    contactData.setTitle("title");
+    contactData.setCompanyName("company");
+    contactData.setAddress("address");
+    contactData.setHomePhone("" + (r.nextInt(100000) + 1000000));
+    contactData.setMobilePhone("+7987" + r.nextInt(1000000));
+    contactData.setEmail1("test@test.test");
+    contactData.setEmail2("test2@test.test");
+    contactData.setGroup("test2");
+    return contactData;
+  }
 
   public String getEmail2() {
     return email2;
