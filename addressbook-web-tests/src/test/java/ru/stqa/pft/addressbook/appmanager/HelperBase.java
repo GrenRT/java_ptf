@@ -5,6 +5,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 /**
  * Created by razgonyaev on 02.12.2016.
@@ -47,6 +48,7 @@ public class HelperBase {
       return false;
     }
   }
+
 
 
 }

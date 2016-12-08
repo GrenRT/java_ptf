@@ -11,6 +11,9 @@ public class ContactModificationTests extends TestBase {
   @Test
   public void testContactModification() {
     app.getNavigationHelper().gotoHome();
+    if (!  app.contactHelper().isThereAContact()) {
+      app.contactHelper().createContact();
+    }
     app.contactHelper().openModificationForm();
     app.contactHelper().fillContactForm(ContactData.getParamsObject(), false);
     app.contactHelper().submitContactModification();

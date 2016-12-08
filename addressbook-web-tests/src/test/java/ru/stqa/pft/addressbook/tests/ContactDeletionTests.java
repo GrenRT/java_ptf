@@ -10,6 +10,9 @@ public class ContactDeletionTests extends TestBase {
   @Test
   public void testContactDeletion() {
     app.getNavigationHelper().gotoHome();
+    if (!  app.contactHelper().isThereAContact()) {
+      app.contactHelper().createContact();
+    }
     app.contactHelper().openModificationForm();
     app.contactHelper().deleteContact();
   }

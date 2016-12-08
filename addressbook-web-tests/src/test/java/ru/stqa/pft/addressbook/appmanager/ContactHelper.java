@@ -3,12 +3,15 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.appmanager.HelperBase;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -40,7 +43,14 @@ public class ContactHelper extends HelperBase {
     type(By.name("email2"), contactData.getEmail2());
 
     if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      Select select = new Select(wd.findElement(By.name("new_group")));
+      List<WebElement> elements = select.getOptions();
+      for (WebElement webElement : elements) {
+        if (webElement.getText() != null && webElement.getText().equals(contactData.getGroup())) {
+          select.selectByVisibleText(contactData.getGroup());
+          break;
+        }
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -62,6 +72,25 @@ public class ContactHelper extends HelperBase {
 
   public void deleteContact() {
     click(By.xpath("//div[@id='content']/form[2]/input[2]"));
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("Edit"));
+  }
+
+  private void gotoHome() {
+    if (isElementPresent(By.id("maintable"))) {
+      return;
+    }
+    click(By.linkText("home"));
+  }
+
+
+  public void createContact() {
+    gotoContactCreationForm();
+    fillContactForm(ContactData.getParamsObject(), true);
+    submitContactCreation();
+    gotoHome();
   }
 
 }
