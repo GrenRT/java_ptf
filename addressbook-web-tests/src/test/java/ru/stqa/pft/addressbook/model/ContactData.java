@@ -49,7 +49,6 @@ public class ContactData {
   }
 
   public String getEmail1() {
-
     return email1;
   }
 
@@ -58,7 +57,6 @@ public class ContactData {
   }
 
   public String getMobilePhone() {
-
     return mobilePhone;
   }
 
@@ -67,7 +65,6 @@ public class ContactData {
   }
 
   public String getAddress() {
-
     return address;
   }
 
@@ -76,7 +73,6 @@ public class ContactData {
   }
 
   public String getHomePhone() {
-
     return homePhone;
   }
 
@@ -85,7 +81,6 @@ public class ContactData {
   }
 
   public String getCompanyName() {
-
     return companyName;
   }
 
@@ -94,7 +89,6 @@ public class ContactData {
   }
 
   public String getTitle() {
-
     return title;
   }
 
@@ -103,7 +97,6 @@ public class ContactData {
   }
 
   public String getLastName() {
-
     return lastName;
   }
 
