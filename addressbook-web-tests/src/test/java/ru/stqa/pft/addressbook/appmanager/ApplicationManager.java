@@ -52,7 +52,7 @@ public class ApplicationManager {
   public GroupHelper getGroupHelper() {
     return groupHelper;
   }
-  public ContactHelper contactHelper() {
+  public ContactHelper getContactHelper() {
     return contactHelper;
   }
 
