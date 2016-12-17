@@ -60,12 +60,16 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
   }
 
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
+  }
+
   public void submitContactModification() {
     click(By.name("update"));
   }
 
   public void deleteContact() {
-    click(By.xpath("//div[@id='content']/form[2]/input[2]"));
+    click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
   }
 
   public boolean isThereAContact() {
@@ -102,4 +106,7 @@ public class ContactHelper extends HelperBase {
     return contacts;
   }
 
+  public void closeWindows() {
+    wd.switchTo().alert().accept();
+  }
 }
