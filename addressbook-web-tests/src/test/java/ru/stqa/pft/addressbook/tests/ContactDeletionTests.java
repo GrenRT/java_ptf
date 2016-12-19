@@ -13,7 +13,7 @@ public class ContactDeletionTests extends TestBase {
 
   @Test
   public void testContactDeletion() {
-    app.getNavigationHelper().gotoHome();
+    app.goTo().gotoHome();
     if (!  app.getContactHelper().isThereAContact()) {
       app.getContactHelper().createContact(new ContactData("Test1", "Test1","Test1","Test1","Test1","Test1","Test1","8800235","+7987654321","Test1@test.com","Test2@etst.com","test2"));
     }
@@ -21,7 +21,7 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().selectContact(before.size() - 1);
     app.getContactHelper().deleteContact();
     app.getContactHelper().closeWindows();
-    app.getNavigationHelper().gotoHome();
+    app.goTo().gotoHome();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() - 1);
 
