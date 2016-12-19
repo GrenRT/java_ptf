@@ -35,6 +35,7 @@ public class ContactData {
     this.group = group;
   }
 
+  //упрощенный конструктор, содержащий только iD, Имя и Фамилию
   public ContactData(int id, String firstName, String lastName) {
     this.id = id;
     this.firstName = firstName;

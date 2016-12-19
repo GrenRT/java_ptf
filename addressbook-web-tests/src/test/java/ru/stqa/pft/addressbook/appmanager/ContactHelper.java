@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ContactHelper extends HelperBase {
 
-
+  String stringNumber;
 
   public ContactHelper(WebDriver wd) {
     super(wd);
@@ -56,8 +56,9 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void openModificationForm() {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  //Открывает последний контакт в списке
+  public void openModificationForm(int stringNumber) {
+    click(By.xpath("//table[@id='maintable']/tbody/tr[" + stringNumber + "]/td[8]/a/img"));
   }
 
   public void selectContact(int index) {
@@ -73,7 +74,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public boolean isThereAContact() {
-    return isElementPresent(By.name("Edit"));
+    return isElementPresent(By.name("entry"));
   }
 
   private void gotoHome() {
@@ -92,8 +93,7 @@ public class ContactHelper extends HelperBase {
 
   public List<ContactData> getContactList() {
     List<ContactData> contacts = new ArrayList<>();
-    List<WebElement> elements = wd.findElements(By.cssSelector("tr"));
-    elements.remove(0);
+    List<WebElement> elements = wd.findElements(By.name("entry"));
 
     for (WebElement element : elements) {
       String[] name = element.getText().split("\\s+");
