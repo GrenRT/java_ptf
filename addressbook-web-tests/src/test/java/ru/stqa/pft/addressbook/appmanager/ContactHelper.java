@@ -39,6 +39,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("email2"), contactData.getEmail2());
 
     if (creation) {
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");// выбираем [none], т.к. при создании контакта не задаем ему группу.
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
