@@ -7,8 +7,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by razgonyaev on 02.12.2016.
@@ -25,7 +26,7 @@ public class ContactHelper extends HelperBase {
     click(By.name("submit"));
   }
 
-  public void fillContactForm(ContactData contactData, boolean creation) {
+  public void fill(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("middlename"), contactData.getMiddleName());
     type(By.name("lastname"), contactData.getLastName());
@@ -49,22 +50,29 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  //Открывает последний контакт в списке
-  public void openModificationForm(int stringNumber) {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[" + stringNumber + "]/td[8]/a/img"));
+  //Открывает контакт в списке
+  public void openModifyForm(int id) {
+    wd.get("http://localhost/addressbook/edit.php?id=" + id);
   }
 
-  public void selectContact(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
-  public void submitContactModification() {
+  public void submit() {
     click(By.name("update"));
+  }
+
+  public void delete(ContactData contact) {
+   selectContactById(contact.getId());
+   deleteContact();
+   closeWindows();
   }
 
   public void deleteContact() {
     click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
   }
+
 
   public boolean isThereAContact() {
     return isElementPresent(By.name("entry"));
@@ -77,15 +85,20 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("home"));
   }
 
-  public void createContact(ContactData contact) {
+  public void create(ContactData contact) {
     gotoContactCreationForm();
-    fillContactForm(contact, true);
+    fill(contact, true);
     submitContactCreation();
     gotoHome();
   }
 
-  public List<ContactData> getContactList() {
-    List<ContactData> contacts = new ArrayList<>();
+  public void modify(ContactData contact) {
+    openModifyForm(contact.getId());
+    fill(contact, false);
+  }
+
+  public Set<ContactData> all() {
+    Set<ContactData> contacts = new HashSet<ContactData>();
     List<WebElement> elements = wd.findElements(By.name("entry"));
 
     for (WebElement element : elements) {
@@ -93,7 +106,7 @@ public class ContactHelper extends HelperBase {
       String firstName = cells.get(1).getText();
       String lastName = cells.get(2).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      ContactData contact = new ContactData(id, firstName, lastName);
+      ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName);
       contacts.add(contact);
     }
     return contacts;
