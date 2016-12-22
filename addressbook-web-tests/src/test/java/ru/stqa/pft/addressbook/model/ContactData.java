@@ -19,6 +19,10 @@ public class ContactData {
   private String email2;
   private String group;
 
+  public int getId() {
+    return id;
+  }
+
   public String getEmail2() {
     return email2;
   }
@@ -133,10 +137,6 @@ public class ContactData {
     return this;
   }
 
-  public int getId() {
-    return id;
-  }
-
   @Override
   public String toString() {
     return "ContactData{" +
@@ -145,6 +145,7 @@ public class ContactData {
             ", lastName='" + lastName + '\'' +
             '}';
   }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -165,5 +166,4 @@ public class ContactData {
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
     return result;
   }
-
 }
