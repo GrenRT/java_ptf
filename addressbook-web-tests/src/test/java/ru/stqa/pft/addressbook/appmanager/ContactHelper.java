@@ -60,6 +60,10 @@ public class ContactHelper extends HelperBase {
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
+  public int count () {
+    return  wd.findElements(By.name("entry")).size();
+  }
+
   public void submit() {
     click(By.name("update"));
   }
