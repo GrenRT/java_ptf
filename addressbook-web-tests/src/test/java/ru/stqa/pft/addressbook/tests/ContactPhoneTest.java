@@ -3,6 +3,9 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -16,12 +19,18 @@ public class ContactPhoneTest extends TestBase {
     app.goTo().home();
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
-//Будет ошибка, если отсутствует хотя бы 1 из телефонов. Надо перехватывать исключения?
-    assertThat(contact.getHomePhone(), equalTo(cleaned(contactInfoFromEditForm.getHomePhone())));
-    assertThat(contact.getMobilePhone(), equalTo(cleaned(contactInfoFromEditForm.getMobilePhone())));
-    assertThat(contact.getWorkPhone(), equalTo(cleaned(contactInfoFromEditForm.getWorkPhone())));
+    assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
   }
-  public String cleaned(String phone) {
+
+  private String mergePhones(ContactData contact) {
+    return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone()) //Формируем коллекцию телефонов
+            .stream().filter((s) -> ! s.equals(""))                                                //выбрасываем из нее пустые,
+            .map(ContactPhoneTest::cleaned)                                                        //в каждому применяем функцию cleaned
+            .collect(Collectors.joining("\n"));                                                    //собираем в одну строку
+  }
+
+
+  public static String cleaned(String phone) {
     return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
   }
 }
