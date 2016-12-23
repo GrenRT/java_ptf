@@ -8,10 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 /**
  * Created by razgonyaev on 02.12.2016.
@@ -52,9 +49,14 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  //Открывает контакт в списке
+  //Открывает модификацию контакт в списке
   public void openModifyForm(int id) {
     wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s'", id))).click();
+  }
+
+  //Отктывает окно просмотра информации о контакте
+  private void openViewForm(int id) {
+    wd.findElement(By.cssSelector(String.format("a[href='view.php?id=%s'", id))).click();
   }
 
   public void selectContactById(int id) {
@@ -140,4 +142,12 @@ public class ContactHelper extends HelperBase {
             .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work)
             .withEmail1(email1).withEmail2(email2).withEmail3(email3);
   }
+
+  public ContactData infoFromViewForm(ContactData contact) {
+    openViewForm(contact.getId());
+    String allInfo = wd.findElement(By.cssSelector("div#content")).getText();
+    wd.navigate().back();
+    return new ContactData().withAllInfo(allInfo);
+  }
+
 }

@@ -22,6 +22,7 @@ public class ContactData {
   private String workPhone;
   private String allPhones;
   private String allEmails;
+  private String allInfo;
 
   public String getAllPhones() {
     return allPhones;
@@ -89,6 +90,10 @@ public class ContactData {
 
   public String getAllEmails() {
     return allEmails;
+  }
+
+  public String getAllInfo() {
+    return allInfo;
   }
 
   public ContactData withAllEmails(String allEmails) {
@@ -178,7 +183,10 @@ public class ContactData {
     return this;
   }
 
-
+  public ContactData withAllInfo(String allInfo) {
+    this.allInfo = allInfo;
+    return this;
+  }
 
   @Override
   public String toString() {
