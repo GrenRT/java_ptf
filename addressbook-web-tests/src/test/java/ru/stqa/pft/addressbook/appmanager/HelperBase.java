@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.io.File;
+
 /**
  * Created by razgonyaev on 02.12.2016.
  */
@@ -31,7 +33,13 @@ public class HelperBase {
       }
     }
   }
-   public boolean isAlertPresent() {
+  protected void attach(By locator, File file) {
+    if (file != null) {
+        wd.findElement(locator).sendKeys(file.getAbsolutePath());
+    }
+  }
+
+  public boolean isAlertPresent() {
     try {
       wd.switchTo().alert();
       return true;
