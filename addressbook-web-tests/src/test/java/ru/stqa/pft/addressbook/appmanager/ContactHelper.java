@@ -15,8 +15,6 @@ import java.util.List;
  */
 public class ContactHelper extends HelperBase {
 
-  String stringNumber;
-
   public ContactHelper(WebDriver wd) {
     super(wd);
   }
