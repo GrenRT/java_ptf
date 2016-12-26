@@ -18,12 +18,12 @@ public class GroupCreationTests extends TestBase {
   @DataProvider
   public Iterator<Object[]> validGroup() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();             //Заполняем список массивох тестовых данных
-    BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/groups.csv")));
-    String line = reader.readLine();
-    while (line != null) {
-      String[] split = line.split(";");
-      list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
-      line = reader.readLine();
+    BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/groups.csv"))); //Создаем объект, из которого можно читать строки
+    String line = reader.readLine(); //читаем первую строку
+    while (line != null) {  //цикл выполняется пока есть строки
+      String[] split = line.split(";"); //строки режутся на тестовые данные
+      list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])}); //заполнение тестовыми данными объекта GroupData
+      line = reader.readLine(); //читается новая строка
     }
     return list.iterator();
   }
