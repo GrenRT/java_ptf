@@ -41,7 +41,7 @@ public class ContactDataTest extends TestBase {
 
   private String mergeAllInfo(ContactData contact) {
     String allPhones = Arrays.asList("H: " + contact.getHomePhone(), "M: " + contact.getMobilePhone(), "W: " + contact.getWorkPhone()).stream()        //делаем коллекцию телефонов
-            .filter((s) -> ! s.equals("")).filter((s) -> ! s.equals("M: ")).filter((s) -> ! s.equals("W: ")).filter((s) -> ! s.equals("H: "))          //выкидываем пустые
+            .filter((s) -> ! s.equals("M: ")).filter((s) -> ! s.equals("W: ")).filter((s) -> ! s.equals("H: "))                                        //выкидываем пустые
             .collect(Collectors.joining("\n"));
     String allEmails = Arrays.asList(contact.getEmail1(), contact.getEmail2(), contact.getEmail3()).stream()                                           //делаем коллекцию email
             .filter((s) -> ! s.equals("")).collect(Collectors.joining("\n"));                                                                          //выкидываем пустые
