@@ -31,11 +31,6 @@ public class ContactData {
     return photo;
   }
 
-  public ContactData withPhoto(File photo) {
-    this.photo = photo;
-    return this;
-  }
-
   public String getAllPhones() {
     return allPhones;
   }
@@ -197,6 +192,11 @@ public class ContactData {
 
   public ContactData withAllInfo(String allInfo) {
     this.allInfo = allInfo;
+    return this;
+  }
+
+  public ContactData withPhoto(File photo) {
+    this.photo = photo;
     return this;
   }
 
