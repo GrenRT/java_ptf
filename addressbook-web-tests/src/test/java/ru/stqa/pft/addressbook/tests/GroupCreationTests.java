@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -20,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class GroupCreationTests extends TestBase {
 
   @DataProvider
-  public Iterator<Object[]> validGroup() throws IOException {
+  public Iterator<Object[]> validGroupsFromXml() throws IOException {
     BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/groups.xml"))); //Создаем объект, из которого можно читать строки
     String xml = "";
     String line = reader.readLine(); //читаем первую строку
@@ -34,7 +36,21 @@ public class GroupCreationTests extends TestBase {
     return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
   }
 
-  @Test(dataProvider = "validGroup")
+  @DataProvider
+  public Iterator<Object[]> validGroupsFromJson() throws IOException {
+    BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/groups.json"))); //Создаем объект, из которого можно читать строки
+    String json = "";
+    String line = reader.readLine(); //читаем первую строку
+    while (line != null) {  //цикл выполняется пока есть строки
+      json += line;
+      line = reader.readLine(); //читается новая строка
+    }
+    Gson gson = new Gson();
+    List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());   //здесь делается магия
+    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();  //каждый объект заворачиваем в массив, состояжий из этого объекта, потому что так хочет фреймворк TestNG
+  }
+
+  @Test(dataProvider = "validGroupsFromJson")
   public void testGroupCreation(GroupData group) {
     app.goTo().groupPage();
     Groups before = app.group().all();
