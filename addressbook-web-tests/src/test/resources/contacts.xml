@@ -1,0 +1,22 @@
+<list>
+  <contact>
+    <firstName>Test 0</firstName>
+    <lastName>Lastname 0</lastName>
+  </contact>
+  <contact>
+    <firstName>Test 1</firstName>
+    <lastName>Lastname 1</lastName>
+  </contact>
+  <contact>
+    <firstName>Test 2</firstName>
+    <lastName>Lastname 2</lastName>
+  </contact>
+  <contact>
+    <firstName>Test 3</firstName>
+    <lastName>Lastname 3</lastName>
+  </contact>
+  <contact>
+    <firstName>Test 4</firstName>
+    <lastName>Lastname 4</lastName>
+  </contact>
+</list>
