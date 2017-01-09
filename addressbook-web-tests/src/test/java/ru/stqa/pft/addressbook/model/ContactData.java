@@ -1,12 +1,17 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.io.File;
 
 /**
  * Created by razgonyaev on 01.12.2016.
  */
+@XStreamAlias("contact") //задаем подсказку, как называть данные при сохранении в xml
 public class ContactData {
 
+  @XStreamOmitField  //не сохранять это поле в xml
   private int id = Integer.MAX_VALUE;;
   private String firstName;
   private String middleName;

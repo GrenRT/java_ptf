@@ -69,6 +69,7 @@ public class GroupDataGenerator {
     XStream xstream = new XStream();
     xstream.processAnnotations(GroupData.class);
     String xml = xstream.toXML(groups);
+    System.out.println(file.getAbsolutePath());
     Writer writer = new FileWriter(file);
     writer.write(xml);
     writer.close();
