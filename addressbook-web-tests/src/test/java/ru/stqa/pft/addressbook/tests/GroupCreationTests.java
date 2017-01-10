@@ -23,31 +23,33 @@ public class GroupCreationTests extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validGroupsFromXml() throws IOException {
-    BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/groups.xml"))); //Создаем объект, из которого можно читать строки
-    String xml = "";
-    String line = reader.readLine(); //читаем первую строку
-    while (line != null) {  //цикл выполняется пока есть строки
-      xml += line;
-      line = reader.readLine(); //читается новая строка
+    try (BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/groups.xml")))) { //Создаем объект, из которого можно читать строки
+      String xml = "";
+      String line = reader.readLine(); //читаем первую строку
+      while (line != null) {  //цикл выполняется пока есть строки
+        xml += line;
+        line = reader.readLine(); //читается новая строка
+      }
+      XStream xstream = new XStream();
+      xstream.processAnnotations(GroupData.class);
+      List<GroupData> groups = (List<GroupData>) xstream.fromXML(xml);
+      return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
     }
-    XStream xstream = new XStream();
-    xstream.processAnnotations(GroupData.class);
-    List<GroupData> groups = (List<GroupData>) xstream.fromXML(xml);
-    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
   }
 
   @DataProvider
   public Iterator<Object[]> validGroupsFromJson() throws IOException {
-    BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/groups.json"))); //Создаем объект, из которого можно читать строки
-    String json = "";
-    String line = reader.readLine(); //читаем первую строку
-    while (line != null) {  //цикл выполняется пока есть строки
-      json += line;
-      line = reader.readLine(); //читается новая строка
+    try (BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/groups.json")))) {
+      String json = "";
+      String line = reader.readLine();
+      while (line != null) {
+        json += line;
+        line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());   //здесь делается магия
+      return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();  //каждый объект заворачиваем в массив, состояжий из этого объекта, потому что так хочет фреймворк TestNG
     }
-    Gson gson = new Gson();
-    List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());   //здесь делается магия
-    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();  //каждый объект заворачиваем в массив, состояжий из этого объекта, потому что так хочет фреймворк TestNG
   }
 
   @Test(dataProvider = "validGroupsFromJson")
