@@ -22,9 +22,12 @@ public class ContactData {
   private String nickName;
   private String title;
   private String companyName;
+  @Expose
   private String address;
   private String homePhone;
+  @Expose
   private String mobilePhone;
+  @Expose
   private String email1;
   private String email2;
   private String email3;

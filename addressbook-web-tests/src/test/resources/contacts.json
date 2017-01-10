@@ -1,10 +1,16 @@
 [
   {
     "firstName": "Test 0",
-    "lastName": "Lastname 0"
+    "lastName": "Lastname 0",
+    "address": "Address 0",
+    "mobilePhone": "+79176990",
+    "email1": "test0@test.test"
   },
   {
-    "firstName": "Test 1",
-    "lastName": "Lastname 1"
+    "firstName": "Test 9",
+    "lastName": "Lastname 9",
+    "address": "Address 9",
+    "mobilePhone": "+79828839",
+    "email1": "test9@test.test"
   }
 ]

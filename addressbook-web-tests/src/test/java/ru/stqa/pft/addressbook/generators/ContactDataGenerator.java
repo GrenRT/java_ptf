@@ -52,8 +52,9 @@ public class ContactDataGenerator {
       saveAsXml(contacts, new File(file));                              //Сохранение списка в файл xml
     } else if (format.equals("json")) {
       saveAsJson(contacts, new File(file));                              //Сохранение списка в файл json
+    } else {
+      System.out.println("Unrecognize format " + format);
     }
-      System.out.println("Unrecognize format" + format);
   }
 
   private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
@@ -84,8 +85,9 @@ public class ContactDataGenerator {
   private static List<ContactData> generateContacts(int count) {
     List<ContactData> contacts = new ArrayList<ContactData>();
     for (int i = 0; i < count; i++) {
-      contacts.add(new ContactData().withFirstName(String.format("Test %s", i))
-              .withLastName((String.format("Lastname %s", i))));
+      contacts.add(new ContactData().withFirstName(String.format("Test %s", i)).withLastName(String.format("Lastname %s", i))
+              .withAddress(String.format("Address %s", i)).withEmail1(String.format("test%s@test.test", i))
+              .withMobilePhone(String.format("+7" +(int) (900000 + Math.random()*100000) + "%s", i)));
     }
     return contacts;
   }
