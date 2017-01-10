@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -22,7 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactCreationTest extends TestBase {
 
   @DataProvider
-  public Iterator<Object[]> validContact() throws IOException {
+  public Iterator<Object[]> validContactFromXml() throws IOException {
     try (BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/contacts.xml")))) {  //Создаем объект, из которого можно читать строки
       String xml = "";
       String line = reader.readLine(); //читаем первую строку
@@ -36,8 +38,22 @@ public class ContactCreationTest extends TestBase {
       return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
     }
   }
+  @DataProvider
+  public Iterator<Object[]> validGroupsFromJson() throws IOException {
+    try (BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/contacts.json")))) {
+      String json = "";
+      String line = reader.readLine();
+      while (line != null) {
+        json += line;
+        line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());   //здесь делается магия
+      return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();  //каждый объект заворачиваем в массив, состояжий из этого объекта, потому что так хочет фреймворк TestNG
+    }
+  }
 
-  @Test(dataProvider = "validContact")
+  @Test(dataProvider = "validGroupsFromJson")
   public void testContactCreation(ContactData contact) {
     app.goTo().home();
     Contacts before = app.contact().all();
