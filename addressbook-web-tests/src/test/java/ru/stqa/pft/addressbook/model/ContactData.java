@@ -84,7 +84,11 @@ public class ContactData {
   private String photo;
 
   public File getPhoto() {
-    return new File(photo);
+    try {                                       //Ловим NPE
+      return new File(photo);
+    } catch (NullPointerException e) {
+      return null;
+    }
   }
 
   public String getAllPhones() {
