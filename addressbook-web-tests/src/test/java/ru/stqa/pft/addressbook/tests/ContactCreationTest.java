@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,7 +39,7 @@ public class ContactCreationTest extends TestBase {
     }
   }
   @DataProvider
-  public Iterator<Object[]> validGroupsFromJson() throws IOException {
+  public Iterator<Object[]> validContactFromJson() throws IOException {
     try (BufferedReader reader = new BufferedReader( new FileReader(new File("src/test/resources/contacts.json")))) {
       String json = "";
       String line = reader.readLine();
@@ -53,12 +53,13 @@ public class ContactCreationTest extends TestBase {
     }
   }
 
-  @Test(dataProvider = "validGroupsFromJson")
+  @Test(dataProvider = "validContactFromJson")
   public void testContactCreation(ContactData contact) {
-    app.goTo().home();
     Contacts before = app.db().contacts();
-//    File photo = new File("src/test/resources/peng.jpg");
-    app.contact().create(contact);
+    Groups groups = app.db().groups();
+    File photo = new File("src/test/resources/peng.jpg");
+    app.goTo().home();
+    app.contact().create(contact.withPhoto(photo).inGroup(groups.iterator().next()));
     app.goTo().home();
     Assert.assertEquals(app.contact().count(), before.size() + 1);
     Contacts after = app.db().contacts();
