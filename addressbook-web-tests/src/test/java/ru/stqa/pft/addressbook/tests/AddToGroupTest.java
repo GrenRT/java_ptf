@@ -2,10 +2,11 @@ package ru.stqa.pft.addressbook.tests;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.GroupData;
-import ru.stqa.pft.addressbook.model.Groups;
+import ru.stqa.pft.addressbook.model.*;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 
 /**
  * Created by razgonyaev on 18.01.2017.
@@ -19,6 +20,7 @@ public class AddToGroupTest extends TestBase {
       app.contact().create(new ContactData().withFirstName("Test1").withLastName("Test1").withAddress("address").withNickName("Test1").withMobilePhone("+7987654321"));
     }
   }
+  @BeforeMethod
   public void ensurePreconditionsGroups() {
     if (app.db().groups().size() == 0) {
       app.goTo().groupPage();
@@ -35,8 +37,10 @@ public class AddToGroupTest extends TestBase {
 
     app.goTo().home();
     app.contact().addToGroup(contact.getId(),group.getName());
+    ContactInGroup afterAdd = app.db().contactInGroup();
 
-
+    assertThat(contact.getId(), equalTo(afterAdd.getContactId()));
+    assertThat(group.getId(), equalTo(afterAdd.getGroupId()));
   }
 
 }
