@@ -152,4 +152,13 @@ public class ContactHelper extends HelperBase {
     return new ContactData().withAllInfo(allInfo);
   }
 
+  public void addToGroup(int id, String group) {
+    selectContactById(id);
+    selectGroupForAdd(group);
+    click(By.name("add"));
+  }
+
+  private void selectGroupForAdd(String group) {
+    new Select(wd.findElement(By.cssSelector("div.right > select"))).selectByVisibleText(group);
+  }
 }

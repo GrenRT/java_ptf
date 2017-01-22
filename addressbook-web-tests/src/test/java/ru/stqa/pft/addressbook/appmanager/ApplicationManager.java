@@ -64,6 +64,7 @@ public class ApplicationManager {
   public GroupHelper group() {
     return groupHelper;
   }
+
   public ContactHelper contact() {
     return contactHelper;
   }
@@ -71,6 +72,7 @@ public class ApplicationManager {
   public NavigationHelper goTo() {
     return navigationHelper;
   }
+
   public DbHelper db () {
     return dbHelper;
   }
