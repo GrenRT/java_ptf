@@ -4,6 +4,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.*;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -37,10 +39,10 @@ public class AddToGroupTest extends TestBase {
 
     app.goTo().home();
     app.contact().addToGroup(contact.getId(),group.getName());
-    ContactInGroup afterAdd = app.db().contactInGroup();
+    List<ContactInGroup> afterAdd = app.db().getContactsInGroup();
 
-    assertThat(contact.getId(), equalTo(afterAdd.getContactId()));
-    assertThat(group.getId(), equalTo(afterAdd.getGroupId()));
+    afterAdd.sort((o1, o2) -> Integer.compare(o1.getDomainId(), o2.getDomainId())); //сортировка , т.к. нужна запись с максимальным domain_id
+    assertThat(contact.getId(), equalTo(afterAdd.get(0).getContactId()));
+    assertThat(group.getId(), equalTo(afterAdd.get(0).getGroupId()));
   }
-
 }

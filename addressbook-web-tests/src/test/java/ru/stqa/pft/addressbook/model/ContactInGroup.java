@@ -13,23 +13,22 @@ import java.util.List;
  */
 @Entity
 @Table(name = "address_in_groups")
-
 public class ContactInGroup {
-
 
   @Id
   @Column(name = "domain_id")
   private int domainId;
 
+  public int getDomainId() {
+    return domainId;
+  }
+
   @Column(name = "id")
+
   private int contactId;
 
   @Column(name = "group_id")
   private int groupId;
-
-  public ContactInGroup(Collection<ContactInGroup> result) {
-     new HashSet<ContactInGroup>(result);
-  }
 
   public int getContactId() {
     return contactId;
@@ -47,5 +46,33 @@ public class ContactInGroup {
     this.groupId = groupId;
   }
 
+  @Override
+  public String toString() {
+    return "ContactInGroup{" +
+            "domainId=" + domainId +
+            ", contactId=" + contactId +
+            ", groupId=" + groupId +
+            '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ContactInGroup that = (ContactInGroup) o;
+
+    if (domainId != that.domainId) return false;
+    if (contactId != that.contactId) return false;
+    return groupId == that.groupId;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = domainId;
+    result = 31 * result + contactId;
+    result = 31 * result + groupId;
+    return result;
+  }
 }
 
