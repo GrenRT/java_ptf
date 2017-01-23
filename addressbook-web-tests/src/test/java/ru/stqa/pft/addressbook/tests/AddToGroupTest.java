@@ -29,12 +29,21 @@ public class AddToGroupTest extends TestBase {
       app.group().create(new GroupData().withName("Test1"));
     }
   }
+  @BeforeMethod         //проверка, что контакт уже есть в группе и группа единственная
+  public void ensurePreconditionsContactInGroups() {
+    if(app.db().contacts().stream().iterator().next().getGroups().size()!=0 && app.db().groups().size()==1) {
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("Test2"));
+    }
+  }
 
-  @Test
+    @Test
   public void testAddToGroup() {
     ContactData contact = app.db().contacts().stream().iterator().next();
     GroupData group = app.db().groups().stream().iterator().next();
     List<ContactInGroup> beforeAdd = app.db().getContactsInGroup();
+
+    searchContactWithoutGroup(contact, group);
 
     app.goTo().home();
     app.contact().addToGroup(contact.getId(),group.getName());
@@ -43,5 +52,28 @@ public class AddToGroupTest extends TestBase {
 
     assertThat(contact.getId(), equalTo(afterAdd.getContactId()));
     assertThat(group.getId(), equalTo(afterAdd.getGroupId()));
+  }
+
+  private void searchContactWithoutGroup(ContactData contact, GroupData group) {
+    for(GroupData g : app.db().groups()) {
+      if (verificationContactInGroup(contact, g)) {
+        group = app.db().groups().stream().iterator().next();
+      }
+      searchContactWithoutGroup(contact, group);
+    }
+
+  }
+
+  private boolean verificationContactInGroup(ContactData contact, GroupData group) {
+    boolean sing = false;
+    for(GroupData g : contact.getGroups()) {
+      if(group.getId() == g.getId()) {
+        sing =  true;
+        break;
+      } else {
+        sing = false;
+      }
+    }
+    return sing;
   }
 }
