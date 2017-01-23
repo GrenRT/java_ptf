@@ -32,17 +32,16 @@ public class AddToGroupTest extends TestBase {
 
   @Test
   public void testAddToGroup() {
-    Contacts beforeContacts = app.db().contacts();
-    Groups beforeGroups = app.db().groups();
-    ContactData contact = beforeContacts.stream().iterator().next();
-    GroupData group = beforeGroups.stream().iterator().next();
+    ContactData contact = app.db().contacts().stream().iterator().next();
+    GroupData group = app.db().groups().stream().iterator().next();
+    List<ContactInGroup> beforeAdd = app.db().getContactsInGroup();
 
     app.goTo().home();
     app.contact().addToGroup(contact.getId(),group.getName());
-    List<ContactInGroup> afterAdd = app.db().getContactsInGroup();
+    ContactInGroup afterAdd = app.db().getContactsInGroup()
+            .stream().max((o1, o2) -> Integer.compare(o1.getDomainId(), o2.getDomainId())).get();
 
-    afterAdd.sort((o1, o2) -> Integer.compare(o1.getDomainId(), o2.getDomainId())); //сортировка , т.к. нужна запись с максимальным domain_id
-    assertThat(contact.getId(), equalTo(afterAdd.get(0).getContactId()));
-    assertThat(group.getId(), equalTo(afterAdd.get(0).getGroupId()));
+    assertThat(contact.getId(), equalTo(afterAdd.getContactId()));
+    assertThat(group.getId(), equalTo(afterAdd.getGroupId()));
   }
 }
