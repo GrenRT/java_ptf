@@ -153,7 +153,7 @@ public class ContactHelper extends HelperBase {
     return new ContactData().withAllInfo(allInfo);
   }
 
-  public void addToGroup(int id, String group) {
+  public void addInGroup(int id, String group) {
     selectContactById(id);
     selectGroupForAdd(group);
     click(By.name("add"));
@@ -175,4 +175,13 @@ public class ContactHelper extends HelperBase {
     return sing;
   }
 
+  public void removeOfGroup(int contactId, int groupId) {
+    selectGroupForDisplayById(groupId);
+    selectContactById(contactId);
+    click(By.name("remove"));
+  }
+
+  private void selectGroupForDisplayById(int id) {
+    new Select(wd.findElement(By.cssSelector("#right > select:nth-child(1)"))).selectByValue(String.format("%s", id));
+  }
 }

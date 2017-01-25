@@ -4,16 +4,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
-
 /**
- * Created by razgonyaev on 18.01.2017.
+ * Created by razgonyaev on 25.01.2017.
  */
-public class AddToGroupTest extends TestBase {
+public class RemoveOfGroupTest extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditionsContacts() {
@@ -30,24 +26,19 @@ public class AddToGroupTest extends TestBase {
     }
   }
 
-    @Test
-  public void testAddToGroup() {
+  @Test
+  public void testRemoveContactOfGroup() {
     ContactData contact = app.db().contacts().stream().iterator().next();
     GroupData group = app.db().groups().stream().iterator().next();
 
-    if(app.contact().verifyContactInGroup(contact, group)) {                            //Если контакт уже в выбранной группе, то создаем новую и добавляем в нее
-      app.goTo().groupPage();
-      app.group().create(new GroupData().withName("For Test"));
-      group = app.db().groups().stream()
-              .max((g1, g2) -> Integer.compare(g1.getId(), g2.getId())).get();
+    if(!app.contact().verifyContactInGroup(contact, group)) {                 //Если контакт не в выбранной группе, то добавляем в нее
+      app.goTo().home();
+      app.contact().addInGroup(contact.getId(),group.getName());
     }
-
     app.goTo().home();
-    app.contact().addToGroup(contact.getId(),group.getName());
+    app.contact().removeOfGroup(contact.getId(), group.getId());
+    app.goTo().home();
 
-    Assert.assertTrue(app.contact().verifyContactInGroup(app.db().contactWithId(contact.getId()), group));
-
+    Assert.assertFalse(app.contact().verifyContactInGroup(app.db().contactWithId(contact.getId()), group));
   }
-
-
 }
