@@ -1,12 +1,12 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.ContactInGroup;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
@@ -35,7 +35,7 @@ public class AddToGroupTest extends TestBase {
     ContactData contact = app.db().contacts().stream().iterator().next();
     GroupData group = app.db().groups().stream().iterator().next();
 
-    if(verificationContactInGroup(contact, group)) {                            //Если контакт уже в выбранной группе, то создаем новую и добавляем в нее
+    if(app.contact().verifyContactInGroup(contact, group)) {                            //Если контакт уже в выбранной группе, то создаем новую и добавляем в нее
       app.goTo().groupPage();
       app.group().create(new GroupData().withName("For Test"));
       group = app.db().groups().stream()
@@ -44,25 +44,10 @@ public class AddToGroupTest extends TestBase {
 
     app.goTo().home();
     app.contact().addToGroup(contact.getId(),group.getName());
-    ContactInGroup afterAdd = app.db().getContactsInGroup()
-            .stream().max((o1, o2) -> o1.getCreatedTime().compareTo(o2.getCreatedTime())).get();
 
+    Assert.assertTrue(app.contact().verifyContactInGroup(app.db().contactWithId(contact.getId()), group));
 
-    assertThat(contact.getId(), equalTo(afterAdd.getContactId()));
-    assertThat(group.getId(), equalTo(afterAdd.getGroupId()));
   }
 
 
-  private boolean verificationContactInGroup(ContactData contact, GroupData group) {
-    boolean sing = false;
-    for(GroupData g : contact.getGroups()) {
-      if(group.getId() == g.getId()) {
-        sing =  true;
-        break;
-      } else {
-        sing = false;
-      }
-    }
-    return sing;
-  }
 }
