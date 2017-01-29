@@ -25,6 +25,18 @@ public class ApplicationManager {
   private FtpHelper ftp;
   private MailHelper mailHelper;
 
+  public AdminHelper adminHelper() {
+    return new AdminHelper(this);
+  }
+
+  public NavigationHelper goTo() {
+    return new NavigationHelper(this);
+  }
+
+  public UserHelper userHelper() {
+    return new UserHelper(this);
+  }
+
   public ApplicationManager(String browser) {
     this.browser = browser;
     properties = new Properties();
