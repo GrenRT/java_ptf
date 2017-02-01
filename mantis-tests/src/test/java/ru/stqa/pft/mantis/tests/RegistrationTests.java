@@ -1,12 +1,11 @@
 package ru.stqa.pft.mantis.tests;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.model.MailMessage;
 
 import javax.mail.MessagingException;
+import javax.xml.rpc.ServiceException;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,7 +22,8 @@ public class RegistrationTests extends TestBase {
   }
 
   @Test
-  public void testRegistration() throws IOException, MessagingException {
+  public void testRegistration() throws IOException, MessagingException, ServiceException {
+    skipIfNotFixed(999);
     long now = System.currentTimeMillis();
     String email = String.format("user%s@localhost.localdomain", now);
     String user = String.format("user%s", now);
